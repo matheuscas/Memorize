@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MemoryGameView.swift
 //  Memorize
 //
 //  Created by Matheus Cardoso on 23/09/20.
@@ -7,7 +7,7 @@
 
 import SwiftUI
  
-struct ContentView: View {
+struct MemoryGameView: View {
     var viewModel: EmojiMemoryGame
     var body: some View {
         HStack {
@@ -19,7 +19,7 @@ struct ContentView: View {
         }
             .padding()
             .foregroundColor(.orange)
-            .font(.largeTitle)
+            .font(viewModel.cards.count < 5 ? .largeTitle : .title)
     }
 }
 
@@ -29,9 +29,12 @@ struct CardView: View {
     var body: some View {
         ZStack {
             if card.facesUp {
-                RoundedRectangle(cornerRadius: defaultCornerRadius).fill(Color.white)
+                RoundedRectangle(cornerRadius: defaultCornerRadius)
+                    .fill(Color.white)
+                    .aspectRatio(0.67, contentMode: .fit)
                 RoundedRectangle(cornerRadius: defaultCornerRadius)
                     .stroke(lineWidth: 3.0)
+                    .aspectRatio(0.67, contentMode: .fit)
                 Text(card.content)
             } else {
                 RoundedRectangle(cornerRadius: defaultCornerRadius).fill()
@@ -43,6 +46,6 @@ struct CardView: View {
 // This make the app render in the preview on the right
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: EmojiMemoryGame())
+        MemoryGameView(viewModel: EmojiMemoryGame())
     }
 }
